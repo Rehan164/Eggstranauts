@@ -10,9 +10,9 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Game extends JPanel{
+public class Game extends JPanel {
 
-    private Timer timer;  // fires an event to trigger updating the animation.
+    private Timer timer; // fires an event to trigger updating the animation.
     private boolean[] keys;
 
     private Player player;
@@ -28,14 +28,13 @@ public class Game extends JPanel{
         setSize(w, h);
 
         keys = new boolean[256];
-        timer = new Timer(1000/60, e-> update());
+        timer = new Timer(1000 / 60, e -> update());
         timer.start();
 
-        
-        player = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
-        player2 = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
-        floor = new Floor ( new BufferedImage(400,100,BufferedImage.TYPE_INT_ARGB), new Point (0,400));
-        floor2 = new Floor(new BufferedImage(400,100,BufferedImage.TYPE_INT_ARGB), new Point (600,400));
+        player = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
+        player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
+        floor = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(0, 400));
+        floor2 = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(600, 400));
 
         bulletArrayList = new ArrayList<>();
         counter = 10;
@@ -46,89 +45,87 @@ public class Game extends JPanel{
 
     public void update() { // runs 60 frames per second
 
-        if(keys[KeyEvent.VK_W]) {
-         //   if (player.getGround()){
-                player.jumping(-7);
-         //   }
+        if (keys[KeyEvent.VK_W]) {
+            // if (player.getGround()){
+            player.jumping(-7);
+            // }
         }
 
-        if(keys[KeyEvent.VK_D]) {
+        if (keys[KeyEvent.VK_D]) {
             if (player.getGround()) {
-                player.move(6,0);
+                player.move(6, 0);
             } else {
-                player.move(3,0);
-            }   
+                player.move(3, 0);
+            }
         }
 
-        if(keys[KeyEvent.VK_A]) {
+        if (keys[KeyEvent.VK_A]) {
             if (player.getGround()) {
-                player.move(-6,0);
+                player.move(-6, 0);
             } else {
-                player.move(-3,0);
+                player.move(-3, 0);
             }
         }
 
-        if(keys[KeyEvent.VK_RIGHT]) {
+        if (keys[KeyEvent.VK_RIGHT]) {
             if (player2.getGround()) {
-                player2.move(6,0);
+                player2.move(6, 0);
             } else {
-                player2.move(3,0);
+                player2.move(3, 0);
             }
         }
 
-        if(keys[KeyEvent.VK_LEFT]) {
+        if (keys[KeyEvent.VK_LEFT]) {
             if (player2.getGround()) {
-                player2.move(-6,0);
+                player2.move(-6, 0);
             } else {
-                player2.move(-3,0);
+                player2.move(-3, 0);
             }
         }
 
-        if(counter % 10 == 0) {
+        if (counter % 10 == 0) {
             canShoot1 = true;
         }
 
-
-
-        if(keys[KeyEvent.VK_Q] && canShoot1) {
-            bulletArrayList.add(new Bullet((new BufferedImage(30,30,BufferedImage.TYPE_INT_ARGB)), new Point(player.getX() + player.getWidth()/2, player.getY() + player.getHeight()/2)));
+        if (keys[KeyEvent.VK_Q] && canShoot1) {
+            bulletArrayList.add(new Bullet((new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB)),
+                    new Point(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2)));
             canShoot1 = false;
             counter = 0;
         }
 
         for (int i = 0; i < bulletArrayList.size(); i++) {
-            if(bulletArrayList.get(i).intersects(player2)) {
+            if (bulletArrayList.get(i).intersects(player2)) {
                 bulletArrayList.remove(i);
-                deathCounter2 ++;
-                if(deathCounter2 == 3) {
+                deathCounter2++;
+                if (deathCounter2 == 3) {
                     player2.die(new Point(800, 100));
                     deathCounter2 = 0;
                 }
                 i--;
             }
 
-            else if(bulletArrayList.get(i).getX() > 10000) {
+            else if (bulletArrayList.get(i).getX() > 10000) {
                 bulletArrayList.remove(i);
                 i--;
             }
         }
 
-
         for (Bullet bullet : bulletArrayList) {
             bullet.move(20, 0);
         }
-      
+
         player.fallingDown(floor);
         player2.fallingDown(floor2);
 
-        counter ++;
+        counter++;
 
-        repaint(); //refreshes the screen 
+        repaint(); // refreshes the screen
     }
 
-    public void paintComponent(Graphics g) { //draws 
+    public void paintComponent(Graphics g) { // draws
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
         player.draw(g2);
         player2.draw(g2);
 
@@ -141,16 +138,18 @@ public class Game extends JPanel{
 
     }
 
-
     public double distance(int x1, int x2, int y1, int y2) {
-        return Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
-    /*public boolean detectCollision() {
-        //If distance < radius of circle than they have collided
-        int radius, centerX, centerY, nextX, nextY;
 
-    }*/
-    public void setupKeys(){
+    /*
+     * public boolean detectCollision() {
+     * //If distance < radius of circle than they have collided
+     * int radius, centerX, centerY, nextX, nextY;
+     * 
+     * }
+     */
+    public void setupKeys() {
         addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
