@@ -29,13 +29,6 @@ public class Game extends JPanel {
     private ImageIcon skyImageIcon;
     private Image skyImage;
 
-    /*
-     * private ImageIcon smallBushIcon;
-     * private Image smallBush;
-     * private ImageIcon cloudIcon;
-     * private Image cloud;
-     */
-    private Image cloud;
     private int count;
 
     private ImageIcon player1Icon1, player1Icon2, player1Icon3;
@@ -69,15 +62,8 @@ public class Game extends JPanel {
         platA = new Platform(0, 250, 200, 50, 2);
         water = new Platform(400, 400, 200, 100, 3);
 
-        //
         skyImageIcon = new ImageIcon(Game.class.getResource("images/sky.jpg"));
         skyImage = this.skyImageIcon.getImage();
-        /*
-         * smallBushIcon = new ImageIcon(Game.class.getResource("smallBush.png"));
-         * smallBush = this.smallBushIcon.getImage();
-         * cloudIcon = new ImageIcon(Game.class.getResource("bigCloud.png"));
-         * cloud = this.cloudIcon.getImage();
-         */
 
         player2Icon1 = new ImageIcon(Game.class.getResource("images/sprite_0.png"));
         player2Icon2 = new ImageIcon(Game.class.getResource("images/sprite_1.png"));
@@ -104,8 +90,10 @@ public class Game extends JPanel {
         setupKeys();
     }
 
-    public void update() { // runs 60 frames per second
+    // Runs at 60 fps
+    public void update() {
 
+        // Player 1 movement
         if (keys[KeyEvent.VK_W]) {
             player.jumping(-7);
         }
@@ -146,6 +134,7 @@ public class Game extends JPanel {
             }
         }
 
+        // Player 2 movement
         if (keys[KeyEvent.VK_RIGHT]) {
             if (player2.getGround()) {
                 player2.move(6, 0);
@@ -177,6 +166,7 @@ public class Game extends JPanel {
         if (counter % 10 == 0) {
             canShoot1 = true;
         }
+
         if (counter2 % 10 == 0) {
             canShoot2 = true;
         }
@@ -196,39 +186,31 @@ public class Game extends JPanel {
             counter2 = 0;
         }
 
-        for (int i = 0; i < bulletArrayList.size(); i++) {
+        // Determine if player 1's bullets hit player 2
+        // If so, player 2 dies.
+        // Delete bullets that are out of bounds.
+        for (int i = bulletArrayList.size() - 1; i >= 0; i--) {
             if (bulletArrayList.get(i).intersects(player2)) {
                 bulletArrayList.remove(i);
                 deathCounter2++;
-                if (deathCounter2 == 1) {
-                    player2.die();
-                    die2 = true;
-                    deathCounter2 = 0;
-                }
-                i--;
-            }
-
-            else if (bulletArrayList.get(i).getX() > 10000) {
+                player2.die();
+                die2 = true;
+            } else if (bulletArrayList.get(i).getX() > 10000) {
                 bulletArrayList.remove(i);
-                i--;
             }
         }
 
-        for (int i = 0; i < bulletArrayList2.size(); i++) {
+        // Determine if player 2's bullets hit player 1
+        // If so, player 1 dies.
+        // Delete bullets that are out of bounds.
+        for (int i = bulletArrayList2.size() - 1; i >= 0; i--) {
             if (bulletArrayList2.get(i).intersects(player)) {
                 bulletArrayList2.remove(i);
                 deathCounter1++;
-                if (deathCounter1 == 1) {
-                    player.die();
-                    die1 = true;
-                    deathCounter1 = 0;
-                }
-                i--;
-            }
-
-            else if (bulletArrayList2.get(i).getX() < -1000) {
+                player.die();
+                die1 = true;
+            } else if (bulletArrayList2.get(i).getX() < -10000) {
                 bulletArrayList2.remove(i);
-                i--;
             }
         }
 
@@ -244,10 +226,10 @@ public class Game extends JPanel {
         counter++;
         counter2++;
 
-        repaint(); // refreshes the screen
+        repaint();
     }
 
-    public void paintComponent(Graphics g) { // draws
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(this.skyImage, 0, 0, 1000, 500, null);
@@ -276,19 +258,16 @@ public class Game extends JPanel {
                 die2 = false;
                 deathTimer2 = 0;
             }
-
         }
 
         for (Bullet bullet : bulletArrayList) {
             bullet.draw(g2);
         }
+
         for (Bullet bullet : bulletArrayList2) {
             bullet.draw(g2);
         }
 
-        // g2.drawImage(this.smallBush, -100, 165, 400, 400, null);
-        // g2.drawImage(this.smallBush, 700, 165, 400, 400, null);
-        // g2.drawImage(this.cloud, 100, 100, 100,50, null);
         floor.draw(g2);
         floor2.draw(g2);
         platformA.draw(g2);
@@ -314,10 +293,6 @@ public class Game extends JPanel {
         String timeLeft = "" + (120 - gameTimer.secondsElapsed());
         int x2 = (getWidth() - fm2.stringWidth(timeLeft)) / 2;
         g2.drawString(timeLeft, x2, 80);
-    }
-
-    public double distance(int x1, int x2, int y1, int y2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
     public void setupKeys() {
