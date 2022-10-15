@@ -4,12 +4,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-/* This class represents a Sprite in a game.
-   Sprites have an image and location, and can
-   detect collision/intersection with another Sprite.
-   This class is set up to have rectangular collision
-   detection - rectangles intersecting rectangles.
- */
+
 
 public class Sprite {
 
