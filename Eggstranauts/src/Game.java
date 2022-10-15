@@ -28,11 +28,13 @@ public class Game extends JPanel {
     private Platform plat1, plat2, platA, water;
     private ImageIcon skyImageIcon;
     private Image skyImage;
-    
-    /*private ImageIcon smallBushIcon;
-    private Image smallBush;
-    private ImageIcon cloudIcon;
-    private Image cloud;*/
+
+    /*
+     * private ImageIcon smallBushIcon;
+     * private Image smallBush;
+     * private ImageIcon cloudIcon;
+     * private Image cloud;
+     */
     private Image cloud;
     private int count;
 
@@ -68,21 +70,23 @@ public class Game extends JPanel {
         water = new Platform(400, 400, 200, 100, 3);
 
         //
-        skyImageIcon = new ImageIcon(Game.class.getResource("sky.jpg"));
+        skyImageIcon = new ImageIcon(Game.class.getResource("images/sky.jpg"));
         skyImage = this.skyImageIcon.getImage();
-        /*smallBushIcon = new ImageIcon(Game.class.getResource("smallBush.png"));
-        smallBush = this.smallBushIcon.getImage();
-        cloudIcon = new ImageIcon(Game.class.getResource("bigCloud.png"));
-        cloud = this.cloudIcon.getImage();*/
+        /*
+         * smallBushIcon = new ImageIcon(Game.class.getResource("smallBush.png"));
+         * smallBush = this.smallBushIcon.getImage();
+         * cloudIcon = new ImageIcon(Game.class.getResource("bigCloud.png"));
+         * cloud = this.cloudIcon.getImage();
+         */
 
-        player2Icon1 = new ImageIcon(Game.class.getResource("sprite_0.png"));
-        player2Icon2 = new ImageIcon(Game.class.getResource("sprite_1.png"));
-        player2Icon3 = new ImageIcon(Game.class.getResource("sprite_2.png"));
+        player2Icon1 = new ImageIcon(Game.class.getResource("images/sprite_0.png"));
+        player2Icon2 = new ImageIcon(Game.class.getResource("images/sprite_1.png"));
+        player2Icon3 = new ImageIcon(Game.class.getResource("images/sprite_2.png"));
         player2Image = player2Icon2.getImage();
 
-        player1Icon1 = new ImageIcon(Game.class.getResource("sprite_0_red.png"));
-        player1Icon2 = new ImageIcon(Game.class.getResource("sprite_1_red.png"));
-        player1Icon3 = new ImageIcon(Game.class.getResource("sprite_2_red.png"));
+        player1Icon1 = new ImageIcon(Game.class.getResource("images/sprite_0_red.png"));
+        player1Icon2 = new ImageIcon(Game.class.getResource("images/sprite_1_red.png"));
+        player1Icon3 = new ImageIcon(Game.class.getResource("images/sprite_2_red.png"));
         playerImage = player1Icon1.getImage();
 
         counter = 10;
@@ -186,7 +190,8 @@ public class Game extends JPanel {
 
         if (keys[KeyEvent.VK_SPACE] && canShoot2 && !die2) {
             bulletArrayList2.add(new Bullet((new BufferedImage(15, 15, BufferedImage.TYPE_INT_ARGB)),
-                    new Point(player2.getX() + player2.getWidth() / 2, (player2.getY() + player2.getHeight() / 2) - 30)));
+                    new Point(player2.getX() + player2.getWidth() / 2,
+                            (player2.getY() + player2.getHeight() / 2) - 30)));
             canShoot2 = false;
             counter2 = 0;
         }
