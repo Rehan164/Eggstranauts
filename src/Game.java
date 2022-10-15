@@ -120,7 +120,7 @@ public class Game extends JPanel {
 
         }
 
-        if (keys[KeyEvent.VK_A]) {
+        if (keys[KeyEvent.VK_A] && player.getX() > 0) {
             if (player.getGround()) {
                 player.move(-6, 0);
             } else {
@@ -135,7 +135,7 @@ public class Game extends JPanel {
         }
 
         // Player 2 movement
-        if (keys[KeyEvent.VK_RIGHT]) {
+        if (keys[KeyEvent.VK_RIGHT] && player2.getX() + 50 < 1200) {
             if (player2.getGround()) {
                 player2.move(6, 0);
             } else {
@@ -225,6 +225,16 @@ public class Game extends JPanel {
         player2.fallingDown(floor2, platformA);
         counter++;
         counter2++;
+
+        if(player.getY() > 1000) {
+            player.die();
+            die1 = true;
+        }
+
+        if(player2.getY() > 1000) {
+            player2.die();
+            die2 = true;
+        }
 
         repaint();
     }
