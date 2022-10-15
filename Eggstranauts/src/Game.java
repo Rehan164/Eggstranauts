@@ -24,10 +24,11 @@ public class Game extends JPanel{
         timer = new Timer(1000/60, e-> update());
         timer.start();
 
-       player = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
-       player2 = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(1300, 100));
-       floor = new Floor();
-       floor2 = new Floor(new BufferedImage(400,100,BufferedImage.TYPE_INT_ARGB), new Point (600,400));
+        
+        player = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
+        player2 = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
+        floor = new Floor ( new BufferedImage(400,100,BufferedImage.TYPE_INT_ARGB), new Point (0,400));
+        floor2 = new Floor(new BufferedImage(400,100,BufferedImage.TYPE_INT_ARGB), new Point (600,400));
         
         setupKeys();
     }
@@ -55,7 +56,7 @@ public class Game extends JPanel{
             player2.move(-5,0);
         }
       
-        repaint(); //refresses the screen 
+        repaint(); //refreshes the screen 
     }
 
     public void paintComponent(Graphics g) { //draws 
