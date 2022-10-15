@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 public class Player extends Sprite{
  
     public Player(BufferedImage image, Point location) {
-
         super(image, location);
     }
 

@@ -25,18 +25,32 @@ public class Game extends JPanel{
 
        player = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(100, 100));
        player2 = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(300, 100));
-     //  floor = new Floor(new BufferedImage(800,100,BufferedImage.TYPE_INT_ARGB), new Point (0,100));
+        //  floor = new Floor(new BufferedImage(800,100,BufferedImage.TYPE_INT_ARGB), new Point (0,100));
+        
+        setupKeys();
     }
 
     public void update() { // runs 60 frames per second
 
         if(keys[KeyEvent.VK_W]) {
-            System.out.println("hello");
+            //jump
         }
-        player.move(2,0);
-        if (player.getX() == player2.getX()) { //Ideally group that with any obj sprite
-            System.out.println("GRAAAH");
-            player.setLocation(player.getX()-200, player.getY());
+
+        if(keys[KeyEvent.VK_D]) {
+            player.move(2,0);
+        }
+
+        if(keys[KeyEvent.VK_A]) {
+            player.move(-2,0);
+        }
+
+
+        if(keys[KeyEvent.VK_RIGHT]) {
+            player2.move(2,0);
+        }
+
+        if(keys[KeyEvent.VK_LEFT]) {
+            player2.move(-2,0);
         }
       
         repaint(); //refresses the screen 
@@ -47,8 +61,10 @@ public class Game extends JPanel{
         Graphics2D g2 = (Graphics2D)g;
         player.draw(g2);
         player2.draw(g2);
-        g2.drawRect(100, 100, 100, 100);
+
     }
+
+
     public double distance(int x1, int x2, int y1, int y2) {
         return Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
     }
