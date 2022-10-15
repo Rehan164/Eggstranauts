@@ -53,10 +53,6 @@ public class Player extends Sprite{
             acceleration = 2;
         }
         else {     
-            counter++;
-            if (counter == 10) {
-                acceleration++;
-            }
             location.translate(0, acceleration);
         }
     }

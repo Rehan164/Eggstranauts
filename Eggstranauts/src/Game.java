@@ -36,9 +36,9 @@ public class Game extends JPanel{
     public void update() { // runs 60 frames per second
 
         if(keys[KeyEvent.VK_W]) {
-         //   if (player.getGround()){
+            if (player.getGround()){
                 player.jumping(-7);
-         //   }
+            }
         }
 
         if(keys[KeyEvent.VK_D]) {
