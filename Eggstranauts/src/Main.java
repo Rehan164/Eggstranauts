@@ -6,8 +6,8 @@ public class Main extends JPanel{
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        int width = 1600;
-        int height = 800;
+        int width = 1000;
+        int height = 500;
         window.setBounds(0, 0, width, height + 22); //(x, y, w, h) 22 due to title bar.
 
         JPanel panel = new Game(width, height);
@@ -17,6 +17,6 @@ public class Main extends JPanel{
 
         window.add(panel);
         window.setVisible(true);
-        window.setResizable(true);
+        window.setResizable(false);
     }
 }
