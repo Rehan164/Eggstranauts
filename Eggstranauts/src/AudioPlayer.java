@@ -6,21 +6,21 @@ import javax.sound.sampled.*;
 
 public class AudioPlayer {
     public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        Scanner scanner = new Scanner(System.in);
-
-        playSound("./SFX/Level_Up.wav");
-
-        String response = scanner.next();
+        playLoopingTrack("./SFX/battle_music.wav");
     }
 
-    public static void playSound(String path)
+    public static void playLoopingTrack(String path)
             throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        Scanner scanner = new Scanner(System.in);
+
         File file = new File(path);
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
 
         clip.start();
+
+        String response = scanner.next();
         clip.close();
     }
 }
