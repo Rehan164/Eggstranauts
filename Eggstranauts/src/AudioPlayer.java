@@ -20,7 +20,7 @@ public class AudioPlayer {
 
         clip.start();
 
-        String response = scanner.next();
-        clip.close();
+        // String response = scanner.next();
+        // clip.close();
     }
 }
