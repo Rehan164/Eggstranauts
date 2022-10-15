@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 public class Game extends JPanel {
 
@@ -19,18 +20,22 @@ public class Game extends JPanel {
     private Player player;
     private Player player2;
     private Floor floor, floor2;
-    private int counter;
-    private boolean canShoot1;
-    private int deathCounter2;
+    private int counter, counter2;
+    private boolean canShoot1, canShoot2;
+    private int deathCounter1, deathCounter2;
+    private boolean die1, die2;
+    private int deathTimer1, deathTimer2;
 
     private Platform plat1, plat2, water;
     private ImageIcon skyImageIcon;
     private Image skyImage;
 
-    //private ArrayList<Bullet> bulletArrayList;
+    private ArrayList<Bullet> bulletArrayList, bulletArrayList2;
 
     public Game(int w, int h) {
         setSize(w, h);
+        bulletArrayList = new ArrayList<>();
+        bulletArrayList2 = new ArrayList<>();
 
         keys = new boolean[256];
         timer = new Timer(1000 / 60, e -> update());
@@ -48,20 +53,27 @@ public class Game extends JPanel {
         skyImageIcon = new ImageIcon(Game.class.getResource("sky.png"));
         skyImage = this.skyImageIcon.getImage();
 
-        //bulletArrayList = new ArrayList<>();
         counter = 10;
         deathCounter2 = 0;
         canShoot1 = true;
+        counter2 = 10;
+        deathCounter1 = 0;
+        canShoot2 = true;
+        die1 = false;
+        die2 = false;
+
         setupKeys();
     }
 
     public void update() { // runs 60 frames per second
 
         if (keys[KeyEvent.VK_W]) {
-            // if (player.getGround()){
-            player.jumping(-7);
-            // }
+             player.jumping(-7);
         }
+
+        if (keys[KeyEvent.VK_UP]) {
+            player2.jumping(-7);
+       }
 
         if (keys[KeyEvent.VK_D]) {
             if (player.getGround()) {
@@ -94,16 +106,26 @@ public class Game extends JPanel {
                 player2.move(-3, 0);
             }
         }
-/*
+
         if (counter % 10 == 0) {
             canShoot1 = true;
         }
+        if (counter2 % 10 == 0) {
+            canShoot2 = true;
+        }
 
-        if (keys[KeyEvent.VK_Q] && canShoot1) {
+        if (keys[KeyEvent.VK_Q] && canShoot1 && !die1) {
             bulletArrayList.add(new Bullet((new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB)),
                     new Point(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2)));
             canShoot1 = false;
             counter = 0;
+        }
+
+        if (keys[KeyEvent.VK_SPACE] && canShoot2 && !die2) {
+            bulletArrayList2.add(new Bullet((new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB)),
+                    new Point(player2.getX() + player2.getWidth() / 2, player2.getY() + player2.getHeight() / 2)));
+            canShoot2 = false;
+            counter2 = 0;
         }
 
         for (int i = 0; i < bulletArrayList.size(); i++) {
@@ -111,7 +133,8 @@ public class Game extends JPanel {
                 bulletArrayList.remove(i);
                 deathCounter2++;
                 if (deathCounter2 == 3) {
-                    player2.die(new Point(800, 100));
+                    player2.die();
+                    die2 = true;
                     deathCounter2 = 0;
                 }
                 i--;
@@ -123,14 +146,36 @@ public class Game extends JPanel {
             }
         }
 
+        for (int i = 0; i < bulletArrayList2.size(); i++) {
+            if (bulletArrayList2.get(i).intersects(player)) {
+                bulletArrayList2.remove(i);
+                deathCounter1++;
+                if (deathCounter1 == 3) {
+                    player.die();
+                    die1 = true;
+                    deathCounter1 = 0;
+                }
+                i--;
+            }
+
+            else if (bulletArrayList2.get(i).getX() < -1000) {
+                bulletArrayList2.remove(i);
+                i--;
+            }
+        }
+
         for (Bullet bullet : bulletArrayList) {
             bullet.move(20, 0);
-        }*/
+        }
+        for (Bullet bullet : bulletArrayList2) {
+            bullet.move(-20, 0);
+        }
 
         player.fallingDown(floor);
         player2.fallingDown(floor2);
 
         counter++;
+        counter2 ++;
 
         repaint(); // refreshes the screen
     }
@@ -142,9 +187,39 @@ public class Game extends JPanel {
         player.draw(g2);
         player2.draw(g2);
 
-        /*for (Bullet bullet : bulletArrayList) {
+        if(!die1) {
+            player.draw(g2);
+        }
+        else {
+            player.setLocation(-1000000,-1000000);
+            deathTimer1 ++;
+            if(deathTimer1 >= 180) {
+                player = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
+                die1 = false;
+                deathTimer1 = 0;
+            }
+
+        }
+        if(!die2) {
+            player2.draw(g2);
+        }
+        else {
+            player2.setLocation(10000, 100000);
+            deathTimer2 ++;
+            if(deathTimer2 >= 180) {
+                player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
+                die2 = false;
+                deathTimer2 = 0;
+            }
+
+        }
+
+        for (Bullet bullet : bulletArrayList) {
             bullet.draw(g2);
-        }*/
+        }
+        for (Bullet bullet : bulletArrayList2) {
+            bullet.draw(g2);
+        }
 
         floor.draw(g2);
         floor2.draw(g2);
@@ -156,14 +231,6 @@ public class Game extends JPanel {
     public double distance(int x1, int x2, int y1, int y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
-
-    /*
-     * public boolean detectCollision() {
-     * //If distance < radius of circle than they have collided
-     * int radius, centerX, centerY, nextX, nextY;
-     * 
-     * }
-     */
     public void setupKeys() {
         addKeyListener(new KeyListener() {
             @Override

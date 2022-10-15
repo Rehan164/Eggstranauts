@@ -13,11 +13,12 @@ public class Player extends Sprite {
 
     private boolean isGrounded;
     private int counter = 0;
+    private int grav = 0;
 
     private int deathCount = 0;
 
     private boolean isJumping;
-
+ 
     public Player(BufferedImage image, Point location) {
         super(image, location);
         this.location = location;
@@ -53,28 +54,21 @@ public class Player extends Sprite {
             location.translate(0, 0);
             isGrounded = true;
             isJumping = false;
-            counter = 0;
-            acceleration = 2;
+            grav = 0;
+            acceleration = 1;
         } else {
+            grav++;
+            if (grav >= 10) {
+                acceleration++;
+            }
             location.translate(0, acceleration);
         }
     }
 
     // "Death" is handled by hiding the player, and resetting their location after
     // some time.
-    public void die(Point respawnPoint) {
-        setLocation(-100000000, -100000);
+    public void die() {
         deathCount++;
-
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run() {
-                // The location
-                setLocation(respawnPoint.x, respawnPoint.y);
-            }
-        };
-
-        timer.schedule(task, 3000);
     }
 
     public int getDeathCount() {
@@ -82,9 +76,10 @@ public class Player extends Sprite {
     }
 
     public void jumping(int dy) {
-        if (isGrounded) {
+        if (isGrounded == true) {
             super.move(0, dy + dy);
-            if (counter == 10) {
+         //   isGrounded = false;
+             if (counter == 10) {
                 isGrounded = false;
                 counter = 0;
             } else {
