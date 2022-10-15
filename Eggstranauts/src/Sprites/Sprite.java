@@ -39,6 +39,8 @@ public class Sprite {
     public int getY(){return location.y;}
     public int getWidth() {return image.getWidth();}
     public int getHeight() {return image.getHeight();}
+    public Point getLocation() {return location;}
+    public BufferedImage getImage() {return image;}
     public void setLocation(int x, int y) {location = new Point(x, y);}
 
 

@@ -56,6 +56,9 @@ public class Game extends JPanel{
             player2.move(-5,0);
         }
       
+        player.fallingDown(floor);
+        player2.fallingDown(floor2);
+
         repaint(); //refreshes the screen 
     }
 

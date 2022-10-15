@@ -7,9 +7,12 @@ import java.awt.image.BufferedImage;
 public class Player extends Sprite{
 
     private int acceleration;
+    private Point location;
  
     public Player(BufferedImage image, Point location) {
         super(image, location);
+        this.location = location;
+        acceleration = 2;
     }
 
     @Override
@@ -25,5 +28,27 @@ public class Player extends Sprite{
     }
 
 
+    public boolean intersectBot(Sprite other){
+        Rectangle otherHitBox = new Rectangle(other.getLocation().x, other.getLocation().y, other.getImage().getWidth(), other.getImage().getHeight());
+        return bottomHitBox().intersects(otherHitBox);
+    }
+
+    public void move(int dx, int dy){
+        super.move(dx, dy);
+    }
+
+    public void fallingDown(Sprite other) {
+
+        if(intersectBot(other)) {
+            location.translate(0, 0);
+        }
+        else {     
+            location.translate(0, acceleration);
+        }
+    }
+
+    public void jumping() {
+
+    }
 
 }
