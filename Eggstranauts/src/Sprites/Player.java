@@ -5,6 +5,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 public class Player extends Sprite{
+
+    private int acceleration;
  
     public Player(BufferedImage image, Point location) {
         super(image, location);
@@ -19,10 +21,9 @@ public class Player extends Sprite{
     }
 
     public Rectangle bottomHitBox() {
-    
         return new Rectangle(getX(), getY() + getHeight(), getWidth(), 2);
     }
 
-    
+
 
 }
