@@ -228,11 +228,18 @@ public class Game extends JPanel {
 
         if(player.getY() > 1000) {
             player.die();
+
+            if(!die1) {
+                deathCounter1++;
+            }
             die1 = true;
         }
 
         if(player2.getY() > 1000) {
             player2.die();
+            if(!die2) {
+                deathCounter2++;
+            }
             die2 = true;
         }
 
