@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 public class Game extends JPanel {
 
@@ -18,19 +19,23 @@ public class Game extends JPanel {
 
     private Player player;
     private Player player2;
-    private Floor floor, floor2, platformA, platformB;
-    private int counter;
-    private boolean canShoot1;
-    private int deathCounter2;
+    private Floor floor, floor2, platformA;
+    private int counter, counter2;
+    private boolean canShoot1, canShoot2;
+    private int deathCounter1, deathCounter2;
+    private boolean die1, die2;
+    private int deathTimer1, deathTimer2;
 
-    private Platform plat1, plat2, platA;
+    private Platform plat1, plat2, platA, water;
+    private ImageIcon skyImageIcon;
+    private Image skyImage;
 
-    private ArrayList<Bullet> bulletArrayList;
+    private ArrayList<Bullet> bulletArrayList, bulletArrayList2;
 
     public Game(int w, int h) {
         setSize(w, h);
         bulletArrayList = new ArrayList<>();
-
+        bulletArrayList2 = new ArrayList<>();
 
         keys = new boolean[256];
         timer = new Timer(1000 / 60, e -> update());
@@ -40,27 +45,41 @@ public class Game extends JPanel {
         player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
         floor = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(0, 400));
         floor2 = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(600, 400));
-
         platformA = new Floor(new BufferedImage(200, 50, BufferedImage.TYPE_INT_ARGB), new Point(0, 250));
 
         plat1 = new Platform(0, 400, 400, 100, 1);
         plat2 = new Platform(600, 400, 400, 100, 1);
-        platA = new Platform(0,250,200,50,2);
+        platA = new Platform(0, 250, 200, 50, 2);
+        water = new Platform(400, 400, 200, 100, 3);
+//
+        skyImageIcon = new ImageIcon(Game.class.getResource("sky.png"));
+        skyImage = this.skyImageIcon.getImage();
 
         counter = 10;
         deathCounter2 = 0;
         canShoot1 = true;
+        counter2 = 10;
+        deathCounter1 = 0;
+        canShoot2 = true;
+        die1 = false;
+        die2 = false;
+
         setupKeys();
     }
 
     public void update() { // runs 60 frames per second
 
         if (keys[KeyEvent.VK_W]) {
-             player.jumping(-9);
+             player.jumping(-7);
         }
         if (keys[KeyEvent.VK_S]) {
             player.setFall(true);
         }
+
+        if (keys[KeyEvent.VK_UP]) {
+            player2.jumping(-7);
+       }
+
         if (keys[KeyEvent.VK_D]) {
             if (player.getGround()) {
                 player.move(6, 0);
@@ -96,12 +115,22 @@ public class Game extends JPanel {
         if (counter % 10 == 0) {
             canShoot1 = true;
         }
+        if (counter2 % 10 == 0) {
+            canShoot2 = true;
+        }
 
-        if (keys[KeyEvent.VK_Q] && canShoot1) {
+        if (keys[KeyEvent.VK_Q] && canShoot1 && !die1) {
             bulletArrayList.add(new Bullet((new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB)),
                     new Point(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2)));
             canShoot1 = false;
             counter = 0;
+        }
+
+        if (keys[KeyEvent.VK_SPACE] && canShoot2 && !die2) {
+            bulletArrayList2.add(new Bullet((new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB)),
+                    new Point(player2.getX() + player2.getWidth() / 2, player2.getY() + player2.getHeight() / 2)));
+            canShoot2 = false;
+            counter2 = 0;
         }
 
         for (int i = 0; i < bulletArrayList.size(); i++) {
@@ -109,7 +138,8 @@ public class Game extends JPanel {
                 bulletArrayList.remove(i);
                 deathCounter2++;
                 if (deathCounter2 == 3) {
-                    player2.die(new Point(800, 100));
+                    player2.die();
+                    die2 = true;
                     deathCounter2 = 0;
                 }
                 i--;
@@ -121,13 +151,35 @@ public class Game extends JPanel {
             }
         }
 
+        for (int i = 0; i < bulletArrayList2.size(); i++) {
+            if (bulletArrayList2.get(i).intersects(player)) {
+                bulletArrayList2.remove(i);
+                deathCounter1++;
+                if (deathCounter1 == 3) {
+                    player.die();
+                    die1 = true;
+                    deathCounter1 = 0;
+                }
+                i--;
+            }
+
+            else if (bulletArrayList2.get(i).getX() < -1000) {
+                bulletArrayList2.remove(i);
+                i--;
+            }
+        }
+
         for (Bullet bullet : bulletArrayList) {
             bullet.move(20, 0);
+        }
+        for (Bullet bullet : bulletArrayList2) {
+            bullet.move(-20, 0);
         }
 
         player.fallingDown(floor, platformA);
         player2.fallingDown(floor2, platformA);
         counter++;
+        counter2 ++;
 
         repaint(); // refreshes the screen
     }
@@ -135,10 +187,39 @@ public class Game extends JPanel {
     public void paintComponent(Graphics g) { // draws
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        player.draw(g2);
-        player2.draw(g2);
+        g2.drawImage(this.skyImage, this.WIDTH, this.HEIGHT, null);
+        
+        if(!die1) {
+            player.draw(g2);
+        }
+        else {
+            player.setLocation(-1000000,-1000000);
+            deathTimer1 ++;
+            if(deathTimer1 >= 180) {
+                player = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
+                die1 = false;
+                deathTimer1 = 0;
+            }
+
+        }
+        if(!die2) {
+            player2.draw(g2);
+        }
+        else {
+            player2.setLocation(10000, 100000);
+            deathTimer2 ++;
+            if(deathTimer2 >= 180) {
+                player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
+                die2 = false;
+                deathTimer2 = 0;
+            }
+
+        }
 
         for (Bullet bullet : bulletArrayList) {
+            bullet.draw(g2);
+        }
+        for (Bullet bullet : bulletArrayList2) {
             bullet.draw(g2);
         }
 
@@ -148,6 +229,7 @@ public class Game extends JPanel {
         plat1.drawSelf(g2);
         plat2.drawSelf(g2);
         platA.drawSelf(g2);
+        water.drawSelf(g2);
     }
 
     public double distance(int x1, int x2, int y1, int y2) {

@@ -18,6 +18,9 @@ public class Platform {
         if (type == 1) {
             this.platformImageIcon = new ImageIcon(Platform.class.getResource("ground.png"));
             this.platformImage = this.platformImageIcon.getImage();
+        } else if (type == 3) {
+            this.platformImageIcon = new ImageIcon(Platform.class.getResource("water.png"));
+            this.platformImage = this.platformImageIcon.getImage();
         } else {
             this.platformImageIcon = new ImageIcon(Platform.class.getResource("brick.png"));
             this.platformImage = this.platformImageIcon.getImage();
