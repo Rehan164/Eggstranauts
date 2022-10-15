@@ -8,12 +8,12 @@ public class Main extends JPanel {
     // Creates the window and starts the game loop
     public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         // Start the soundtrack
-        AudioPlayer.playSound("sounds/battle_music.wav");
+        //AudioPlayer.playSound("sounds/battle_music.wav");
 
         // Create the window
         JFrame window = new JFrame();
-        int width = 1000;
-        int height = 500;
+        int width = 1200;
+        int height = 600;
         window.setBounds(0, 0, width, height + 22); // (x, y, w, h) 22 due to title bar.
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

@@ -52,15 +52,15 @@ public class Game extends JPanel {
 
         player = new Player(new BufferedImage(56, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
         player2 = new Player(new BufferedImage(56, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
-        floor = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(0, 400));
-        floor2 = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(600, 400));
+        floor = new Floor(new BufferedImage(500, 100, BufferedImage.TYPE_INT_ARGB), new Point(0, 500));
+        floor2 = new Floor(new BufferedImage(500, 100, BufferedImage.TYPE_INT_ARGB), new Point(700, 500));
         platformA = new Floor(new BufferedImage(200, 50, BufferedImage.TYPE_INT_ARGB), new Point(0, 250));
 
-        plat1 = new Platform(0, 400, 400, 100, 1);
-        plat2 = new Platform(600, 400, 400, 100, 1);
+        plat1 = new Platform(0, 500, 500, 100, 1);
+        plat2 = new Platform(700, 500, 500, 100, 1);
 
         platA = new Platform(0, 250, 200, 50, 2);
-        water = new Platform(400, 400, 200, 100, 3);
+        water = new Platform(500, 500, 200, 100, 3);
 
         skyImageIcon = new ImageIcon(Game.class.getResource("images/sky.jpg"));
         skyImage = this.skyImageIcon.getImage();
@@ -232,7 +232,7 @@ public class Game extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(this.skyImage, 0, 0, 1000, 500, null);
+        g2.drawImage(this.skyImage, 0, 0, 1200, 500, null);
 
         if (!die1) {
             player.draw(g2);
@@ -285,8 +285,8 @@ public class Game extends JPanel {
         g2.setColor(Color.WHITE);
         g2.setFont(getFont().deriveFont(50f));
         FontMetrics fm = g2.getFontMetrics();
-        int x = (getWidth() - fm.stringWidth(deathCounter1 + "-" + deathCounter2)) / 2;
-        g2.drawString(deathCounter1 + "-" + deathCounter2, x, 50);
+        int x = (getWidth() - fm.stringWidth(deathCounter2 + "-" + deathCounter1)) / 2;
+        g2.drawString(deathCounter2 + "-" + deathCounter1, x, 50);
 
         g2.setFont(getFont().deriveFont(20f));
         FontMetrics fm2 = g2.getFontMetrics();

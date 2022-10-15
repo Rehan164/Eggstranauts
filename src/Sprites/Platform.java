@@ -22,7 +22,7 @@ public class Platform {
             this.platformImageIcon = new ImageIcon(Platform.class.getResource("water.png"));
             this.platformImage = this.platformImageIcon.getImage();
         } else {
-            this.platformImageIcon = new ImageIcon(Platform.class.getResource("brick.png"));
+            this.platformImageIcon = new ImageIcon(Platform.class.getResource("plat.png"));
             this.platformImage = this.platformImageIcon.getImage();
         }
     }
