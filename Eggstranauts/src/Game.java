@@ -23,7 +23,9 @@ public class Game extends JPanel {
     private boolean canShoot1;
     private int deathCounter2;
 
-    private Platform plat1, plat2;
+    private Platform plat1, plat2, water;
+    private ImageIcon skyImageIcon;
+    private Image skyImage;
 
     //private ArrayList<Bullet> bulletArrayList;
 
@@ -41,6 +43,10 @@ public class Game extends JPanel {
 
         plat1 = new Platform(0, 400, 400, 100, 1);
         plat2 = new Platform(600, 400, 400, 100, 1);
+        water = new Platform(400, 400, 200, 100, 3);
+
+        skyImageIcon = new ImageIcon(Game.class.getResource("sky.png"));
+        skyImage = this.skyImageIcon.getImage();
 
         //bulletArrayList = new ArrayList<>();
         counter = 10;
@@ -132,6 +138,7 @@ public class Game extends JPanel {
     public void paintComponent(Graphics g) { // draws
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(this.skyImage, this.WIDTH, this.HEIGHT, null);
         player.draw(g2);
         player2.draw(g2);
 
@@ -143,6 +150,7 @@ public class Game extends JPanel {
         floor2.draw(g2);
         plat1.drawSelf(g2);
         plat2.drawSelf(g2);
+        water.drawSelf(g2);
     }
 
     public double distance(int x1, int x2, int y1, int y2) {
