@@ -25,10 +25,12 @@ public class Game extends JPanel {
 
     private Platform plat1, plat2;
 
-    //private ArrayList<Bullet> bulletArrayList;
+    private ArrayList<Bullet> bulletArrayList;
 
     public Game(int w, int h) {
         setSize(w, h);
+        bulletArrayList = new ArrayList<>();
+
 
         keys = new boolean[256];
         timer = new Timer(1000 / 60, e -> update());
@@ -42,7 +44,6 @@ public class Game extends JPanel {
         plat1 = new Platform(0, 400, 400, 100, 1);
         plat2 = new Platform(600, 400, 400, 100, 1);
 
-        //bulletArrayList = new ArrayList<>();
         counter = 10;
         deathCounter2 = 0;
         canShoot1 = true;
@@ -86,7 +87,7 @@ public class Game extends JPanel {
                 player2.move(-3, 0);
             }
         }
-/*
+
         if (counter % 10 == 0) {
             canShoot1 = true;
         }
@@ -117,7 +118,7 @@ public class Game extends JPanel {
 
         for (Bullet bullet : bulletArrayList) {
             bullet.move(20, 0);
-        }*/
+        }
 
         player.fallingDown(floor);
         player2.fallingDown(floor2);
@@ -133,9 +134,9 @@ public class Game extends JPanel {
         player.draw(g2);
         player2.draw(g2);
 
-        /*for (Bullet bullet : bulletArrayList) {
+        for (Bullet bullet : bulletArrayList) {
             bullet.draw(g2);
-        }*/
+        }
 
         floor.draw(g2);
         floor2.draw(g2);
