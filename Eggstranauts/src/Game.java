@@ -49,7 +49,7 @@ public class Game extends JPanel{
                 player.jumping(-7);
          //   }
         }
-//
+
         if(keys[KeyEvent.VK_D]) {
             if (player.getGround()) {
                 player.move(6,0);
