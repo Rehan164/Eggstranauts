@@ -8,11 +8,18 @@ public class Player extends Sprite{
 
     private int acceleration;
     private Point location;
+
+    private boolean isGrounded;
+    private int counter = 0;
+
+    private boolean isJumping;
  
     public Player(BufferedImage image, Point location) {
         super(image, location);
         this.location = location;
         acceleration = 2;
+        isGrounded = false;
+        isJumping = false;
     }
 
     @Override
@@ -28,7 +35,7 @@ public class Player extends Sprite{
     }
 
 
-    public boolean intersectBot(Sprite other){
+    public boolean intersectBot(Sprite other) {
         Rectangle otherHitBox = new Rectangle(other.getLocation().x, other.getLocation().y, other.getImage().getWidth(), other.getImage().getHeight());
         return bottomHitBox().intersects(otherHitBox);
     }
@@ -41,14 +48,30 @@ public class Player extends Sprite{
 
         if(intersectBot(other)) {
             location.translate(0, 0);
+            isGrounded = true;
+            isJumping = false;
         }
         else {     
             location.translate(0, acceleration);
         }
     }
 
-    public void jumping() {
+    public void jumping(int dy) {
+        if(isGrounded) {
+            super.move(0, dy);
 
+            if(counter == 10) {
+                isGrounded = false;
+                counter = 0;
+            }
+            else {
+                counter ++;
+            }
+
+        }
     }
 
+    public boolean getGround() {
+        return isGrounded;
+    }
 }
