@@ -46,24 +46,42 @@ public class Game extends JPanel {
 
     public void update() { // runs 60 frames per second
 
-        if (keys[KeyEvent.VK_W]) {
-            // jump
+        if(keys[KeyEvent.VK_W]) {
+         //   if (player.getGround()){
+                player.jumping(-7);
+         //   }
         }
 
-        if (keys[KeyEvent.VK_D]) {
-            player.move(5, 0);
+        if(keys[KeyEvent.VK_D]) {
+            if (player.getGround()) {
+                player.move(6,0);
+            } else {
+                player.move(3,0);
+            }   
         }
 
-        if (keys[KeyEvent.VK_A]) {
-            player.move(-5, 0);
+        if(keys[KeyEvent.VK_A]) {
+            if (player.getGround()) {
+                player.move(-6,0);
+            } else {
+                player.move(-3,0);
+            }
         }
 
-        if (keys[KeyEvent.VK_RIGHT]) {
-            player2.move(5, 0);
+        if(keys[KeyEvent.VK_RIGHT]) {
+            if (player2.getGround()) {
+                player2.move(6,0);
+            } else {
+                player2.move(3,0);
+            }
         }
 
-        if (keys[KeyEvent.VK_LEFT]) {
-            player2.move(-5, 0);
+        if(keys[KeyEvent.VK_LEFT]) {
+            if (player2.getGround()) {
+                player2.move(-6,0);
+            } else {
+                player2.move(-3,0);
+            }
         }
 
         repaint(); // refreshes the screen
