@@ -30,6 +30,9 @@ public class Game extends JPanel {
     private ImageIcon skyImageIcon;
     private Image skyImage;
 
+    private ImageIcon player1Icon;
+    private Image playerImage;
+
     private ArrayList<Bullet> bulletArrayList, bulletArrayList2;
 
     public Game(int w, int h) {
@@ -41,7 +44,7 @@ public class Game extends JPanel {
         timer = new Timer(1000 / 60, e -> update());
         timer.start();
 
-        player = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
+        player = new Player(new BufferedImage(36, 48, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
         player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
         floor = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(0, 400));
         floor2 = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(600, 400));
@@ -54,6 +57,9 @@ public class Game extends JPanel {
 //
         skyImageIcon = new ImageIcon(Game.class.getResource("sky.png"));
         skyImage = this.skyImageIcon.getImage();
+
+        player1Icon = new ImageIcon(Game.class.getResource("sprite_0.png"));
+        playerImage = player1Icon.getImage();
 
         counter = 10;
         deathCounter2 = 0;
@@ -191,6 +197,7 @@ public class Game extends JPanel {
         
         if(!die1) {
             player.draw(g2);
+            g2.drawImage(this.playerImage, player.getX(), player.getY(), null);
         }
         else {
             player.setLocation(-1000000,-1000000);
