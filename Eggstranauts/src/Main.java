@@ -8,7 +8,7 @@ public class Main extends JPanel {
     // Creates the window and starts the game loop
     public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         // Start the soundtrack
-        AudioPlayer.playLoopingTrack("SFX/battle_music.wav");
+        // AudioPlayer.playLoopingTrack("./SFX/battle_music.wav");
 
         // Create the window
         JFrame window = new JFrame();
