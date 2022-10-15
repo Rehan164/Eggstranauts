@@ -18,12 +18,12 @@ public class Game extends JPanel {
 
     private Player player;
     private Player player2;
-    private Floor floor, floor2;
+    private Floor floor, floor2, platformA, platformB;
     private int counter;
     private boolean canShoot1;
     private int deathCounter2;
 
-    private Platform plat1, plat2;
+    private Platform plat1, plat2, platA;
 
     //private ArrayList<Bullet> bulletArrayList;
 
@@ -39,8 +39,11 @@ public class Game extends JPanel {
         floor = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(0, 400));
         floor2 = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(600, 400));
 
+        platformA = new Floor(new BufferedImage(200, 50, BufferedImage.TYPE_INT_ARGB), new Point(0, 250));
+
         plat1 = new Platform(0, 400, 400, 100, 1);
         plat2 = new Platform(600, 400, 400, 100, 1);
+        platA = new Platform(0,250,200,50,2);
 
         //bulletArrayList = new ArrayList<>();
         counter = 10;
@@ -52,7 +55,7 @@ public class Game extends JPanel {
     public void update() { // runs 60 frames per second
 
         if (keys[KeyEvent.VK_W]) {
-             player.jumping(-7);
+             player.jumping(-9);
         }
 
         if (keys[KeyEvent.VK_D]) {
@@ -139,8 +142,10 @@ public class Game extends JPanel {
 
         floor.draw(g2);
         floor2.draw(g2);
+        platformA.draw(g2);
         plat1.drawSelf(g2);
         plat2.drawSelf(g2);
+        platA.drawSelf(g2);
     }
 
     public double distance(int x1, int x2, int y1, int y2) {
