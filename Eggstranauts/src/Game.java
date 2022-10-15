@@ -18,6 +18,8 @@ public class Game extends JPanel{
     private Player player;
     private Player player2;
     private Floor floor, floor2;
+    private int counter;
+    private boolean canShoot1;
 
     private ArrayList<Bullet> bulletArrayList;
 
@@ -35,7 +37,8 @@ public class Game extends JPanel{
         floor2 = new Floor(new BufferedImage(400,100,BufferedImage.TYPE_INT_ARGB), new Point (600,400));
 
         bulletArrayList = new ArrayList<>();
-        
+        counter = 10;
+        canShoot1 = true;
         setupKeys();
     }
 
@@ -79,14 +82,27 @@ public class Game extends JPanel{
             }
         }
 
-        if(keys[KeyEvent.VK_Q]) {
-            bulletArrayList.add(new Bullet((new BufferedImage(30,30,BufferedImage.TYPE_INT_ARGB)), new Point(player.getX() + player.getWidth()/2, player.getY() + player.getHeight()/2)));
+        if(counter % 10 == 0) {
+            canShoot1 = true;
         }
 
 
+
+        if(keys[KeyEvent.VK_Q] && canShoot1) {
+            bulletArrayList.add(new Bullet((new BufferedImage(30,30,BufferedImage.TYPE_INT_ARGB)), new Point(player.getX() + player.getWidth()/2, player.getY() + player.getHeight()/2)));
+            canShoot1 = false;
+            counter = 0;
+        }
+
+
+        for (Bullet bullet : bulletArrayList) {
+            bullet.move(20, 0);
+        }
       
         player.fallingDown(floor);
         player2.fallingDown(floor2);
+
+        counter ++;
 
         repaint(); //refreshes the screen 
     }
