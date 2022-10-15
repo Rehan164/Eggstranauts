@@ -135,7 +135,7 @@ public class Game extends JPanel {
         }
 
         // Player 2 movement
-        if (keys[KeyEvent.VK_RIGHT] && player2.getX() + 50 < 1200) {
+        if (keys[KeyEvent.VK_RIGHT] && player2.getX() + 70 < 1200) {
             if (player2.getGround()) {
                 player2.move(6, 0);
             } else {
