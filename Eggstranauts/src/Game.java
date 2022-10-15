@@ -39,6 +39,8 @@ public class Game extends JPanel {
 
     private ArrayList<Bullet> bulletArrayList, bulletArrayList2;
 
+    private GameTimer gameTimer;
+
     public Game(int w, int h) {
         setSize(w, h);
         bulletArrayList = new ArrayList<>();
@@ -58,7 +60,7 @@ public class Game extends JPanel {
         plat2 = new Platform(600, 400, 400, 100, 1);
         platA = new Platform(0, 250, 200, 50, 2);
         water = new Platform(400, 400, 200, 100, 3);
-//
+        //
         skyImageIcon = new ImageIcon(Game.class.getResource("sky.gif"));
         skyImage = this.skyImageIcon.getImage();
         smallBushIcon = new ImageIcon(Game.class.getResource("smallBush.png"));
@@ -78,13 +80,16 @@ public class Game extends JPanel {
         die1 = false;
         die2 = false;
 
+        gameTimer = new GameTimer(120, this);
+        gameTimer.start();
+
         setupKeys();
     }
 
     public void update() { // runs 60 frames per second
 
         if (keys[KeyEvent.VK_W]) {
-             player.jumping(-7);
+            player.jumping(-7);
         }
         if (keys[KeyEvent.VK_S]) {
             player.setFall(true);
@@ -92,7 +97,7 @@ public class Game extends JPanel {
 
         if (keys[KeyEvent.VK_UP]) {
             player2.jumping(-7);
-       }
+        }
 
         if (keys[KeyEvent.VK_D]) {
             if (player.getGround()) {
@@ -193,7 +198,7 @@ public class Game extends JPanel {
         player.fallingDown(floor, platformA);
         player2.fallingDown(floor2, platformA);
         counter++;
-        counter2 ++;
+        counter2++;
 
         repaint(); // refreshes the screen
     }
@@ -202,28 +207,26 @@ public class Game extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(this.skyImage, 0, 0, 1000, 500, null);
-        
-        if(!die1) {
+
+        if (!die1) {
             player.draw(g2);
             g2.drawImage(this.playerImage, player.getX(), player.getY(), null);
-        }
-        else {
-            player.setLocation(-1000000,-1000000);
-            deathTimer1 ++;
-            if(deathTimer1 >= 180) {
+        } else {
+            player.setLocation(-1000000, -1000000);
+            deathTimer1++;
+            if (deathTimer1 >= 180) {
                 player = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
                 die1 = false;
                 deathTimer1 = 0;
             }
 
         }
-        if(!die2) {
+        if (!die2) {
             player2.draw(g2);
-        }
-        else {
+        } else {
             player2.setLocation(10000, 100000);
-            deathTimer2 ++;
-            if(deathTimer2 >= 180) {
+            deathTimer2++;
+            if (deathTimer2 >= 180) {
                 player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
                 die2 = false;
                 deathTimer2 = 0;
@@ -238,9 +241,9 @@ public class Game extends JPanel {
             bullet.draw(g2);
         }
 
-        //g2.drawImage(this.smallBush, -100, 165, 400, 400, null);
-        //g2.drawImage(this.smallBush, 700, 165, 400, 400, null);
-        //g2.drawImage(this.cloud, 100, 100, 100,50, null);
+        // g2.drawImage(this.smallBush, -100, 165, 400, 400, null);
+        // g2.drawImage(this.smallBush, 700, 165, 400, 400, null);
+        // g2.drawImage(this.cloud, 100, 100, 100,50, null);
         floor.draw(g2);
         floor2.draw(g2);
         platformA.draw(g2);
@@ -248,11 +251,30 @@ public class Game extends JPanel {
         plat2.drawSelf(g2);
         platA.drawSelf(g2);
         water.drawSelf(g2);
+
+        floor.draw(g2);
+        floor2.draw(g2);
+        plat1.drawSelf(g2);
+        plat2.drawSelf(g2);
+
+        // Draw a string centered on the screen.
+        g2.setColor(Color.WHITE);
+        g2.setFont(getFont().deriveFont(50f));
+        FontMetrics fm = g2.getFontMetrics();
+        int x = (getWidth() - fm.stringWidth(deathCounter1 + "-" + deathCounter2)) / 2;
+        g2.drawString(deathCounter1 + "-" + deathCounter2, x, 50);
+
+        g2.setFont(getFont().deriveFont(20f));
+        FontMetrics fm2 = g2.getFontMetrics();
+        String timeLeft = "" + (120 - gameTimer.secondsElapsed());
+        int x2 = (getWidth() - fm2.stringWidth(timeLeft)) / 2;
+        g2.drawString(timeLeft, x2, 80);
     }
 
     public double distance(int x1, int x2, int y1, int y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
+
     public void setupKeys() {
         addKeyListener(new KeyListener() {
             @Override
@@ -270,6 +292,10 @@ public class Game extends JPanel {
 
             }
         });
+    }
+
+    public void onTimerEnd() {
+        System.out.println("Game over!");
     }
 
 }
