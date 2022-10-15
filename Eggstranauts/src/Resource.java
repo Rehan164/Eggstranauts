@@ -1,4 +1,4 @@
-package Sprites;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -21,11 +21,11 @@ public class Resource {
     // 3. Initialize the variable by copying and pasting and modifying the
     //    ImageIO line.
 
-    public static BufferedImage ground;
+    public static BufferedImage duck, ground;
 
     static{
         try{
-            ground = ImageIO.read(new File("./res/brick.png"));
+            ground = ImageIO.read(new File("ground.png"));
 
         }catch(Exception e){e.printStackTrace();}
     }
