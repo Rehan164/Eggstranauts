@@ -1,19 +1,21 @@
 package Sprites;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
 
-public class Platform {
+public class Platform extends Sprite{
     private Rectangle plat;
 
     private ImageIcon platformImageIcon;
 
     private Image platformImage;
 
-    public Platform(int x, int y, int w, int h, int type) {
+    public Platform(BufferedImage image, Point location, int x, int y, int w, int h, int type) {
+        super(image, location);
         this.plat = new Rectangle(x, y, w, h);
         if (type == 1) {
             this.platformImageIcon = new ImageIcon(Platform.class.getResource("../res/ground.png"));
