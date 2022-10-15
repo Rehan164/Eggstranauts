@@ -52,6 +52,7 @@ public class Player extends Sprite {
     public void setFall(boolean set) {
         fall = set;
     }
+    
     //Checks to see whethere or not player's bottom is touching solid ground
     //Kinda ineffecient cos the more platforms we add the more checks we hafta do. But it works.
     public void fallingDown(Sprite other, Sprite possiblePlat1) {
