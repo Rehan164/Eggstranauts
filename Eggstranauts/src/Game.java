@@ -46,9 +46,7 @@ public class Game extends JPanel {
     public void update() { // runs 60 frames per second
 
         if (keys[KeyEvent.VK_W]) {
-            // if (player.getGround()){
-            player.jumping(-7);
-            // }
+             player.jumping(-7);
         }
 
         if (keys[KeyEvent.VK_D]) {
@@ -141,14 +139,6 @@ public class Game extends JPanel {
     public double distance(int x1, int x2, int y1, int y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
-
-    /*
-     * public boolean detectCollision() {
-     * //If distance < radius of circle than they have collided
-     * int radius, centerX, centerY, nextX, nextY;
-     * 
-     * }
-     */
     public void setupKeys() {
         addKeyListener(new KeyListener() {
             @Override
