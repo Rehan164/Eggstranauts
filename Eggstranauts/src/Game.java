@@ -184,9 +184,7 @@ public class Game extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(this.skyImage, this.WIDTH, this.HEIGHT, null);
-        player.draw(g2);
-        player2.draw(g2);
-
+        
         if(!die1) {
             player.draw(g2);
         }
