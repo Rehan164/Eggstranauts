@@ -13,7 +13,8 @@ public class Player extends Sprite {
 
     private boolean isGrounded;
     private int counter = 0;
-    private int grav = 0;
+    private int grav = 0; //rate at which player falls. Increases the longer they're in the air
+    private boolean fall; //checks if the player wants to drop thru a platform
 
     private int deathCount = 0;
 
@@ -48,23 +49,39 @@ public class Player extends Sprite {
     public void move(int dx, int dy) {
         super.move(dx, dy);
     }
-
-    public void fallingDown(Sprite other) {
-        if (intersectBot(other)) {
+    public void setFall(boolean set) {
+        fall = set;
+    }
+    //Checks to see whethere or not player's bottom is touching solid ground
+    //Kinda ineffecient cos the more platforms we add the more checks we hafta do. But it works.
+    public void fallingDown(Sprite other, Sprite possiblePlat1) {
+        if ((intersectBot(other))) {
             location.translate(0, 0);
             isGrounded = true;
             isJumping = false;
             grav = 0;
             acceleration = 1;
+            fall = false;
+        } else if (intersectBot(possiblePlat1) && (fall == false)) {
+            location.translate(0, 0);
+            isGrounded = true;
+            isJumping = false;
+            grav = 0;
+            acceleration = 1;
+        } else if (intersectBot(possiblePlat1) && (fall == true)){
+          grav = 10;
+          freeFall();
         } else {
-            grav++;
-            if (grav >= 10) {
-                acceleration++;
-            }
-            location.translate(0, acceleration);
+           freeFall();
         }
     }
-
+    public void freeFall() {
+        grav++;
+        if (grav >= 10) {
+            acceleration++;
+        }
+        location.translate(0, acceleration);
+    }
     // "Death" is handled by hiding the player, and resetting their location after
     // some time.
     public void die(Point respawnPoint) {

@@ -58,7 +58,9 @@ public class Game extends JPanel {
         if (keys[KeyEvent.VK_W]) {
              player.jumping(-9);
         }
-
+        if (keys[KeyEvent.VK_S]) {
+            player.setFall(true);
+        }
         if (keys[KeyEvent.VK_D]) {
             if (player.getGround()) {
                 player.move(6, 0);
@@ -123,9 +125,8 @@ public class Game extends JPanel {
             bullet.move(20, 0);
         }
 
-        player.fallingDown(floor);
-        player2.fallingDown(floor2);
-
+        player.fallingDown(floor, platformA);
+        player2.fallingDown(floor2, platformA);
         counter++;
 
         repaint(); // refreshes the screen
