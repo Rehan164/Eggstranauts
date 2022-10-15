@@ -16,10 +16,10 @@ public class Platform {
     public Platform(int x, int y, int w, int h, int type) {
         this.plat = new Rectangle(x, y, w, h);
         if (type == 1) {
-            this.platformImageIcon = new ImageIcon(Platform.class.getResource("../res/ground.png"));
+            this.platformImageIcon = new ImageIcon(Platform.class.getResource("ground.png"));
             this.platformImage = this.platformImageIcon.getImage();
         } else {
-            this.platformImageIcon = new ImageIcon(Platform.class.getResource("../res/brick.png"));
+            this.platformImageIcon = new ImageIcon(Platform.class.getResource("brick.png"));
             this.platformImage = this.platformImageIcon.getImage();
         }
     }
