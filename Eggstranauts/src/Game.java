@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 public class Game extends JPanel {
 
@@ -91,11 +90,13 @@ public class Game extends JPanel {
         die1 = false;
         die2 = false;
 
+        gameTimer = new GameTimer(120, this);
+        gameTimer.start();
+
         setupKeys();
     }
 
     public void update() { // runs 60 frames per second
-
 
         if (keys[KeyEvent.VK_W]) {
             player.jumping(-7);
@@ -115,15 +116,13 @@ public class Game extends JPanel {
                 player.move(3, 0);
             }
 
-            if(count % 14 == 0) {
+            if (count % 14 == 0) {
                 playerImage = player1Icon3.getImage();
-            }
-            else if(count % 7 == 0) {
+            } else if (count % 7 == 0) {
                 playerImage = player1Icon2.getImage();
             }
 
         }
-
 
         if (keys[KeyEvent.VK_A]) {
             if (player.getGround()) {
@@ -132,10 +131,9 @@ public class Game extends JPanel {
                 player.move(-3, 0);
             }
 
-            if(count % 14 == 0) {
+            if (count % 14 == 0) {
                 playerImage = player1Icon3.getImage();
-            }
-            else if(count % 7 == 0) {
+            } else if (count % 7 == 0) {
                 playerImage = player1Icon2.getImage();
             }
         }
@@ -147,10 +145,9 @@ public class Game extends JPanel {
                 player2.move(3, 0);
             }
 
-            if(count % 14 == 0) {
+            if (count % 14 == 0) {
                 player2Image = player2Icon3.getImage();
-            }
-            else if(count % 7 == 0) {
+            } else if (count % 7 == 0) {
                 player2Image = player2Icon2.getImage();
             }
         }
@@ -162,10 +159,9 @@ public class Game extends JPanel {
                 player2.move(-3, 0);
             }
 
-            if(count % 14 == 0) {
+            if (count % 14 == 0) {
                 player2Image = player2Icon3.getImage();
-            }
-            else if(count % 7 == 0) {
+            } else if (count % 7 == 0) {
                 player2Image = player2Icon2.getImage();
             }
         }
@@ -237,7 +233,7 @@ public class Game extends JPanel {
         player.fallingDown(floor, platformA);
         player2.fallingDown(floor2, platformA);
         counter++;
-        counter2 ++;
+        counter2++;
 
         repaint(); // refreshes the screen
     }
@@ -262,8 +258,7 @@ public class Game extends JPanel {
         }
         if (!die2) {
             player2.draw(g2);
-        }
-        else {
+        } else {
             player2.setLocation(10000, 100000);
             deathTimer2++;
             if (deathTimer2 >= 180) {
