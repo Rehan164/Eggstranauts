@@ -68,7 +68,7 @@ public class Game extends JPanel {
         water = new Platform(400, 400, 200, 100, 3);
 
         //
-        skyImageIcon = new ImageIcon(Game.class.getResource("sky.gif"));
+        skyImageIcon = new ImageIcon(Game.class.getResource("sky.jpg"));
         skyImage = this.skyImageIcon.getImage();
         /*smallBushIcon = new ImageIcon(Game.class.getResource("smallBush.png"));
         smallBush = this.smallBushIcon.getImage();

@@ -10,8 +10,7 @@ public class AudioPlayer {
     }
 
     public static void playLoopingTrack(String path)
-            throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        Scanner scanner = new Scanner(System.in);
+        throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
         File file = new File(path);
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
