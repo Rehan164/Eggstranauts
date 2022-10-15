@@ -3,6 +3,8 @@ package Sprites;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 
 /* This class represents a Sprite in a game.
    Sprites have an image and location, and can
