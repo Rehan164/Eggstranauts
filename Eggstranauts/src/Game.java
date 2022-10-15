@@ -29,6 +29,10 @@ public class Game extends JPanel {
     private Platform plat1, plat2, water;
     private ImageIcon skyImageIcon;
     private Image skyImage;
+    private ImageIcon smallBushIcon;
+    private Image smallBush;
+    private ImageIcon cloudIcon;
+    private Image cloud;
 
     private ArrayList<Bullet> bulletArrayList, bulletArrayList2;
 
@@ -50,8 +54,12 @@ public class Game extends JPanel {
         plat2 = new Platform(600, 400, 400, 100, 1);
         water = new Platform(400, 400, 200, 100, 3);
 //
-        skyImageIcon = new ImageIcon(Game.class.getResource("sky.png"));
+        skyImageIcon = new ImageIcon(Game.class.getResource("sky.gif"));
         skyImage = this.skyImageIcon.getImage();
+        smallBushIcon = new ImageIcon(Game.class.getResource("smallBush.png"));
+        smallBush = this.smallBushIcon.getImage();
+        cloudIcon = new ImageIcon(Game.class.getResource("bigCloud.png"));
+        cloud = this.cloudIcon.getImage();
 
         counter = 10;
         deathCounter2 = 0;
@@ -183,7 +191,7 @@ public class Game extends JPanel {
     public void paintComponent(Graphics g) { // draws
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(this.skyImage, this.WIDTH, this.HEIGHT, null);
+        g2.drawImage(this.skyImage, 0, 0, 1000, 500, null);
         
         if(!die1) {
             player.draw(g2);
@@ -219,6 +227,9 @@ public class Game extends JPanel {
             bullet.draw(g2);
         }
 
+        //g2.drawImage(this.smallBush, -100, 165, 400, 400, null);
+        //g2.drawImage(this.smallBush, 700, 165, 400, 400, null);
+        //g2.drawImage(this.cloud, 100, 100, 100,50, null);
         floor.draw(g2);
         floor2.draw(g2);
         plat1.drawSelf(g2);
