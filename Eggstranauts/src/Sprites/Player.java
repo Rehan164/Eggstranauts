@@ -67,19 +67,8 @@ public class Player extends Sprite {
 
     // "Death" is handled by hiding the player, and resetting their location after
     // some time.
-    public void die(Point respawnPoint) {
-        setLocation(-100000000, -100000);
+    public void die() {
         deathCount++;
-
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run() {
-                // The location
-                setLocation(respawnPoint.x, respawnPoint.y);
-            }
-        };
-
-        timer.schedule(task, 3000);
     }
 
     public int getDeathCount() {
