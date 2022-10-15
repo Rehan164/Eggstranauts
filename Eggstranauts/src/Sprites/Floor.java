@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 
 public class Floor extends Sprite{
     public Floor(BufferedImage image, Point location) {
-
         super(image, location);
     }
 
