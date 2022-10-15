@@ -1,7 +1,11 @@
 import javax.swing.*;
 
 import Sprites.Player;
+<<<<<<< Updated upstream
 import Sprites.Resource;
+=======
+import Sprites.Bullet;
+>>>>>>> Stashed changes
 import Sprites.Floor;
 import Sprites.Platform;
 
@@ -9,8 +13,12 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+<<<<<<< Updated upstream
 import java.awt.Image;
 import javax.swing.ImageIcon;
+=======
+import java.util.ArrayList;
+>>>>>>> Stashed changes
 
 public class Game extends JPanel {
 
@@ -26,6 +34,8 @@ public class Game extends JPanel {
     private Image skyImage;
 
 
+    private ArrayList<Bullet> bulletArrayList;
+
     public Game(int w, int h) {
         setSize(w, h);
 
@@ -33,6 +43,7 @@ public class Game extends JPanel {
         timer = new Timer(1000 / 60, e -> update());
         timer.start();
 
+<<<<<<< Updated upstream
         player = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
         player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
 
@@ -41,6 +52,16 @@ public class Game extends JPanel {
         this.skyImgIcon = new ImageIcon(Game.class.getResource("./res/Sky.jpeg"));
         this.skyImage = this.skyImgIcon.getImage();
 
+=======
+        
+        player = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
+        player2 = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
+        floor = new Floor ( new BufferedImage(400,100,BufferedImage.TYPE_INT_ARGB), new Point (0,400));
+        floor2 = new Floor(new BufferedImage(400,100,BufferedImage.TYPE_INT_ARGB), new Point (600,400));
+
+        bulletArrayList = new ArrayList<>();
+        
+>>>>>>> Stashed changes
         setupKeys();
     }
 
@@ -83,6 +104,18 @@ public class Game extends JPanel {
                 player2.move(-3,0);
             }
         }
+<<<<<<< Updated upstream
+=======
+
+        if(keys[KeyEvent.VK_Q]) {
+            bulletArrayList.add(new Bullet((new BufferedImage(30,30,BufferedImage.TYPE_INT_ARGB)), new Point(player.getX() + player.getWidth()/2, player.getY() + player.getHeight()/2)));
+        }
+
+
+      
+        player.fallingDown(floor);
+        player2.fallingDown(floor2);
+>>>>>>> Stashed changes
 
         repaint(); // refreshes the screen
     }
@@ -98,6 +131,16 @@ public class Game extends JPanel {
         player.draw(g2);
         player2.draw(g2);
 
+<<<<<<< Updated upstream
+=======
+        for (Bullet bullet : bulletArrayList) {
+            bullet.draw(g2);
+        }
+
+        floor.draw(g2);
+        floor2.draw(g2);
+
+>>>>>>> Stashed changes
     }
 
     public double distance(int x1, int x2, int y1, int y2) {
