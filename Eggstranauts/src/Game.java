@@ -24,8 +24,8 @@ public class Game extends JPanel{
         timer = new Timer(1000/60, e-> update());
         timer.start();
 
-       player = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(100, 100));
-       player2 = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(300, 100));
+       player = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
+       player2 = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(1300, 100));
        floor = new Floor(new BufferedImage(600,100,BufferedImage.TYPE_INT_ARGB), new Point (0,600));
        floor2 = new Floor(new BufferedImage(600,100,BufferedImage.TYPE_INT_ARGB), new Point (1000,600));
         

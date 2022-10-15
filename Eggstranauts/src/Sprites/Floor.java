@@ -15,4 +15,5 @@ public class Floor extends Sprite{
     public void draw(Graphics2D g2) {
         g2.fillRect(getX(), getY(), getWidth(), getHeight());
     }
+
 }
