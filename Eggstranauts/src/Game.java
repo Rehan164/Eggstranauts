@@ -182,6 +182,7 @@ public class Game extends JPanel {
             player.draw(g2);
         }
         else {
+            player.setLocation(-1000000,-1000000);
             deathTimer1 ++;
             if(deathTimer1 >= 180) {
                 player = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
@@ -194,6 +195,7 @@ public class Game extends JPanel {
             player2.draw(g2);
         }
         else {
+            player2.setLocation(10000, 100000);
             deathTimer2 ++;
             if(deathTimer2 >= 180) {
                 player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
