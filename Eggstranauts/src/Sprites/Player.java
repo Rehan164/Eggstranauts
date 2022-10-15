@@ -3,6 +3,8 @@ package Sprites;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Player extends Sprite {
 
@@ -61,7 +63,7 @@ public class Player extends Sprite {
     // "Death" is handled by hiding the player, and resetting their location after
     // some time.
     public void die(Point respawnPoint) {
-        setLocation(-100, -100);
+        setLocation(-100000000, -100000);
         deathCount++;
 
         Timer timer = new Timer();

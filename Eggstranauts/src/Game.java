@@ -20,6 +20,7 @@ public class Game extends JPanel{
     private Floor floor, floor2;
     private int counter;
     private boolean canShoot1;
+    private int deathCounter2;
 
     private ArrayList<Bullet> bulletArrayList;
 
@@ -38,6 +39,7 @@ public class Game extends JPanel{
 
         bulletArrayList = new ArrayList<>();
         counter = 10;
+        deathCounter2 = 0;
         canShoot1 = true;
         setupKeys();
     }
@@ -92,6 +94,23 @@ public class Game extends JPanel{
             bulletArrayList.add(new Bullet((new BufferedImage(30,30,BufferedImage.TYPE_INT_ARGB)), new Point(player.getX() + player.getWidth()/2, player.getY() + player.getHeight()/2)));
             canShoot1 = false;
             counter = 0;
+        }
+
+        for (int i = 0; i < bulletArrayList.size(); i++) {
+            if(bulletArrayList.get(i).intersects(player2)) {
+                bulletArrayList.remove(i);
+                deathCounter2 ++;
+                if(deathCounter2 == 3) {
+                    player2.die(new Point(800, 100));
+                    deathCounter2 = 0;
+                }
+                i--;
+            }
+
+            else if(bulletArrayList.get(i).getX() > 10000) {
+                bulletArrayList.remove(i);
+                i--;
+            }
         }
 
 

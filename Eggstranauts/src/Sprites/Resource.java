@@ -25,7 +25,7 @@ public class Resource {
 
     static{
         try{
-            ground = ImageIO.read(new File("./res/ground.png"));
+            ground = ImageIO.read(new File("./res/brick.png"));
 
         }catch(Exception e){e.printStackTrace();}
     }
