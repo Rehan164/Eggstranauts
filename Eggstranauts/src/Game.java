@@ -28,9 +28,11 @@ public class Game extends JPanel {
     private Platform plat1, plat2, platA, water;
     private ImageIcon skyImageIcon;
     private Image skyImage;
-    private ImageIcon smallBushIcon;
+    
+    /*private ImageIcon smallBushIcon;
     private Image smallBush;
     private ImageIcon cloudIcon;
+    private Image cloud;*/
     private Image cloud;
     private int count;
 
@@ -61,15 +63,17 @@ public class Game extends JPanel {
 
         plat1 = new Platform(0, 400, 400, 100, 1);
         plat2 = new Platform(600, 400, 400, 100, 1);
+
         platA = new Platform(0, 250, 200, 50, 2);
         water = new Platform(400, 400, 200, 100, 3);
+
         //
         skyImageIcon = new ImageIcon(Game.class.getResource("sky.gif"));
         skyImage = this.skyImageIcon.getImage();
-        smallBushIcon = new ImageIcon(Game.class.getResource("smallBush.png"));
+        /*smallBushIcon = new ImageIcon(Game.class.getResource("smallBush.png"));
         smallBush = this.smallBushIcon.getImage();
         cloudIcon = new ImageIcon(Game.class.getResource("bigCloud.png"));
-        cloud = this.cloudIcon.getImage();
+        cloud = this.cloudIcon.getImage();*/
 
         player2Icon1 = new ImageIcon(Game.class.getResource("sprite_0.png"));
         player2Icon2 = new ImageIcon(Game.class.getResource("sprite_1.png"));
