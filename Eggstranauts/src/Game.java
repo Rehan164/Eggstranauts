@@ -33,9 +33,13 @@ public class Game extends JPanel {
     private Image smallBush;
     private ImageIcon cloudIcon;
     private Image cloud;
+    private int count;
 
-    private ImageIcon player1Icon;
+    private ImageIcon player1Icon1, player1Icon2, player1Icon3;
     private Image playerImage;
+
+    private ImageIcon player2Icon1, player2Icon2, player2Icon3;
+    private Image player2Image;
 
     private ArrayList<Bullet> bulletArrayList, bulletArrayList2;
 
@@ -49,7 +53,7 @@ public class Game extends JPanel {
         timer.start();
 
         player = new Player(new BufferedImage(56, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
-        player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
+        player2 = new Player(new BufferedImage(56, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
         floor = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(0, 400));
         floor2 = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(600, 400));
         platformA = new Floor(new BufferedImage(200, 50, BufferedImage.TYPE_INT_ARGB), new Point(0, 250));
@@ -66,8 +70,15 @@ public class Game extends JPanel {
         cloudIcon = new ImageIcon(Game.class.getResource("bigCloud.png"));
         cloud = this.cloudIcon.getImage();
 
-        player1Icon = new ImageIcon(Game.class.getResource("sprite_0.png"));
-        playerImage = player1Icon.getImage();
+        player2Icon1 = new ImageIcon(Game.class.getResource("sprite_0.png"));
+        player2Icon2 = new ImageIcon(Game.class.getResource("sprite_1.png"));
+        player2Icon3 = new ImageIcon(Game.class.getResource("sprite_2.png"));
+        player2Image = player2Icon2.getImage();
+
+        player1Icon1 = new ImageIcon(Game.class.getResource("sprite_0_red.png"));
+        player1Icon2 = new ImageIcon(Game.class.getResource("sprite_1_red.png"));
+        player1Icon3 = new ImageIcon(Game.class.getResource("sprite_2_red.png"));
+        playerImage = player1Icon1.getImage();
 
         counter = 10;
         deathCounter2 = 0;
@@ -77,11 +88,12 @@ public class Game extends JPanel {
         canShoot2 = true;
         die1 = false;
         die2 = false;
-
+        count = 0;
         setupKeys();
     }
 
     public void update() { // runs 60 frames per second
+
 
         if (keys[KeyEvent.VK_W]) {
              player.jumping(-7);
@@ -100,13 +112,29 @@ public class Game extends JPanel {
             } else {
                 player.move(3, 0);
             }
+
+            if(count % 14 == 0) {
+                playerImage = player1Icon3.getImage();
+            }
+            else if(count % 7 == 0) {
+                playerImage = player1Icon2.getImage();
+            }
+
         }
+
 
         if (keys[KeyEvent.VK_A]) {
             if (player.getGround()) {
                 player.move(-6, 0);
             } else {
                 player.move(-3, 0);
+            }
+
+            if(count % 14 == 0) {
+                playerImage = player1Icon3.getImage();
+            }
+            else if(count % 7 == 0) {
+                playerImage = player1Icon2.getImage();
             }
         }
 
@@ -116,6 +144,13 @@ public class Game extends JPanel {
             } else {
                 player2.move(3, 0);
             }
+
+            if(count % 14 == 0) {
+                player2Image = player2Icon3.getImage();
+            }
+            else if(count % 7 == 0) {
+                player2Image = player2Icon2.getImage();
+            }
         }
 
         if (keys[KeyEvent.VK_LEFT]) {
@@ -123,6 +158,13 @@ public class Game extends JPanel {
                 player2.move(-6, 0);
             } else {
                 player2.move(-3, 0);
+            }
+
+            if(count % 14 == 0) {
+                player2Image = player2Icon3.getImage();
+            }
+            else if(count % 7 == 0) {
+                player2Image = player2Icon2.getImage();
             }
         }
 
@@ -151,7 +193,7 @@ public class Game extends JPanel {
             if (bulletArrayList.get(i).intersects(player2)) {
                 bulletArrayList.remove(i);
                 deathCounter2++;
-                if (deathCounter2 == 3) {
+                if (deathCounter2 == 1) {
                     player2.die();
                     die2 = true;
                     deathCounter2 = 0;
@@ -169,7 +211,7 @@ public class Game extends JPanel {
             if (bulletArrayList2.get(i).intersects(player)) {
                 bulletArrayList2.remove(i);
                 deathCounter1++;
-                if (deathCounter1 == 3) {
+                if (deathCounter1 == 1) {
                     player.die();
                     die1 = true;
                     deathCounter1 = 0;
@@ -194,6 +236,7 @@ public class Game extends JPanel {
         player2.fallingDown(floor2, platformA);
         counter++;
         counter2 ++;
+        count ++;
 
         repaint(); // refreshes the screen
     }
@@ -219,6 +262,7 @@ public class Game extends JPanel {
         }
         if(!die2) {
             player2.draw(g2);
+            g2.drawImage(this.player2Image, player2.getX(), player2.getY(), null);
         }
         else {
             player2.setLocation(10000, 100000);
