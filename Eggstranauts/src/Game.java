@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 import Sprites.Player;
+import Sprites.Floor;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,7 +15,7 @@ public class Game extends JPanel{
 
     private Player player;
     private Player player2;
- //   private Floor floor;
+    private Floor floor, floor2;
 
     public Game(int w, int h) {
         setSize(w, h);
@@ -25,7 +26,8 @@ public class Game extends JPanel{
 
        player = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(100, 100));
        player2 = new Player(new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB), new Point(300, 100));
-        //  floor = new Floor(new BufferedImage(800,100,BufferedImage.TYPE_INT_ARGB), new Point (0,100));
+       floor = new Floor(new BufferedImage(600,100,BufferedImage.TYPE_INT_ARGB), new Point (0,600));
+       floor2 = new Floor(new BufferedImage(600,100,BufferedImage.TYPE_INT_ARGB), new Point (1000,600));
         
         setupKeys();
     }
@@ -37,20 +39,20 @@ public class Game extends JPanel{
         }
 
         if(keys[KeyEvent.VK_D]) {
-            player.move(2,0);
+            player.move(5,0);
         }
 
         if(keys[KeyEvent.VK_A]) {
-            player.move(-2,0);
+            player.move(-5,0);
         }
 
 
         if(keys[KeyEvent.VK_RIGHT]) {
-            player2.move(2,0);
+            player2.move(5,0);
         }
 
         if(keys[KeyEvent.VK_LEFT]) {
-            player2.move(-2,0);
+            player2.move(-5,0);
         }
       
         repaint(); //refresses the screen 
@@ -61,6 +63,9 @@ public class Game extends JPanel{
         Graphics2D g2 = (Graphics2D)g;
         player.draw(g2);
         player2.draw(g2);
+
+        floor.draw(g2);
+        floor2.draw(g2);
 
     }
 
