@@ -178,15 +178,15 @@ public class Game extends JPanel {
         }
 
         if (keys[KeyEvent.VK_Q] && canShoot1 && !die1) {
-            bulletArrayList.add(new Bullet((new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB)),
-                    new Point(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2)));
+            bulletArrayList.add(new Bullet((new BufferedImage(15, 15, BufferedImage.TYPE_INT_ARGB)),
+                    new Point(player.getX() + player.getWidth() / 2, (player.getY() + player.getHeight() / 2) - 30)));
             canShoot1 = false;
             counter = 0;
         }
 
         if (keys[KeyEvent.VK_SPACE] && canShoot2 && !die2) {
-            bulletArrayList2.add(new Bullet((new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB)),
-                    new Point(player2.getX() + player2.getWidth() / 2, player2.getY() + player2.getHeight() / 2)));
+            bulletArrayList2.add(new Bullet((new BufferedImage(15, 15, BufferedImage.TYPE_INT_ARGB)),
+                    new Point(player2.getX() + player2.getWidth() / 2, (player2.getY() + player2.getHeight() / 2) - 30)));
             canShoot2 = false;
             counter2 = 0;
         }
@@ -262,6 +262,7 @@ public class Game extends JPanel {
         }
         if (!die2) {
             player2.draw(g2);
+            g2.drawImage(this.player2Image, player2.getX(), player2.getY(), null);
         } else {
             player2.setLocation(10000, 100000);
             deathTimer2++;
