@@ -19,20 +19,23 @@ public class Game extends JPanel {
 
     private Player player;
     private Player player2;
-    private Floor floor, floor2;
+    private Floor floor, floor2, platformA;
     private int counter, counter2;
     private boolean canShoot1, canShoot2;
     private int deathCounter1, deathCounter2;
     private boolean die1, die2;
     private int deathTimer1, deathTimer2;
 
-    private Platform plat1, plat2, water;
+    private Platform plat1, plat2, platA, water;
     private ImageIcon skyImageIcon;
     private Image skyImage;
     private ImageIcon smallBushIcon;
     private Image smallBush;
     private ImageIcon cloudIcon;
     private Image cloud;
+
+    private ImageIcon player1Icon;
+    private Image playerImage;
 
     private ArrayList<Bullet> bulletArrayList, bulletArrayList2;
 
@@ -45,13 +48,15 @@ public class Game extends JPanel {
         timer = new Timer(1000 / 60, e -> update());
         timer.start();
 
-        player = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
+        player = new Player(new BufferedImage(36, 48, BufferedImage.TYPE_INT_ARGB), new Point(200, 100));
         player2 = new Player(new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB), new Point(800, 100));
         floor = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(0, 400));
         floor2 = new Floor(new BufferedImage(400, 100, BufferedImage.TYPE_INT_ARGB), new Point(600, 400));
+        platformA = new Floor(new BufferedImage(200, 50, BufferedImage.TYPE_INT_ARGB), new Point(0, 250));
 
         plat1 = new Platform(0, 400, 400, 100, 1);
         plat2 = new Platform(600, 400, 400, 100, 1);
+        platA = new Platform(0, 250, 200, 50, 2);
         water = new Platform(400, 400, 200, 100, 3);
 //
         skyImageIcon = new ImageIcon(Game.class.getResource("sky.gif"));
@@ -60,6 +65,9 @@ public class Game extends JPanel {
         smallBush = this.smallBushIcon.getImage();
         cloudIcon = new ImageIcon(Game.class.getResource("bigCloud.png"));
         cloud = this.cloudIcon.getImage();
+
+        player1Icon = new ImageIcon(Game.class.getResource("sprite_0.png"));
+        playerImage = player1Icon.getImage();
 
         counter = 10;
         deathCounter2 = 0;
@@ -77,6 +85,9 @@ public class Game extends JPanel {
 
         if (keys[KeyEvent.VK_W]) {
              player.jumping(-7);
+        }
+        if (keys[KeyEvent.VK_S]) {
+            player.setFall(true);
         }
 
         if (keys[KeyEvent.VK_UP]) {
@@ -179,9 +190,8 @@ public class Game extends JPanel {
             bullet.move(-20, 0);
         }
 
-        player.fallingDown(floor);
-        player2.fallingDown(floor2);
-
+        player.fallingDown(floor, platformA);
+        player2.fallingDown(floor2, platformA);
         counter++;
         counter2 ++;
 
@@ -195,6 +205,7 @@ public class Game extends JPanel {
         
         if(!die1) {
             player.draw(g2);
+            g2.drawImage(this.playerImage, player.getX(), player.getY(), null);
         }
         else {
             player.setLocation(-1000000,-1000000);
@@ -232,8 +243,10 @@ public class Game extends JPanel {
         //g2.drawImage(this.cloud, 100, 100, 100,50, null);
         floor.draw(g2);
         floor2.draw(g2);
+        platformA.draw(g2);
         plat1.drawSelf(g2);
         plat2.drawSelf(g2);
+        platA.drawSelf(g2);
         water.drawSelf(g2);
     }
 
