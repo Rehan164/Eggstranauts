@@ -45,21 +45,25 @@ public class Player extends Sprite{
     }
 
     public void fallingDown(Sprite other) {
-
         if(intersectBot(other)) {
             location.translate(0, 0);
             isGrounded = true;
             isJumping = false;
+            counter = 0;
+            acceleration = 2;
         }
         else {     
+            counter++;
+            if (counter == 10) {
+                acceleration++;
+            }
             location.translate(0, acceleration);
         }
     }
 
     public void jumping(int dy) {
         if(isGrounded) {
-            super.move(0, dy);
-
+            super.move(0, dy+dy);
             if(counter == 10) {
                 isGrounded = false;
                 counter = 0;
@@ -67,7 +71,6 @@ public class Player extends Sprite{
             else {
                 counter ++;
             }
-
         }
     }
 

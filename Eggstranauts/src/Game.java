@@ -36,24 +36,41 @@ public class Game extends JPanel{
     public void update() { // runs 60 frames per second
 
         if(keys[KeyEvent.VK_W]) {
-            player.jumping(-10);
+         //   if (player.getGround()){
+                player.jumping(-7);
+         //   }
         }
 
         if(keys[KeyEvent.VK_D]) {
-            player.move(5,0);
+            if (player.getGround()) {
+                player.move(6,0);
+            } else {
+                player.move(3,0);
+            }   
         }
 
         if(keys[KeyEvent.VK_A]) {
-            player.move(-5,0);
+            if (player.getGround()) {
+                player.move(-6,0);
+            } else {
+                player.move(-3,0);
+            }
         }
 
-
         if(keys[KeyEvent.VK_RIGHT]) {
-            player2.move(5,0);
+            if (player2.getGround()) {
+                player2.move(6,0);
+            } else {
+                player2.move(3,0);
+            }
         }
 
         if(keys[KeyEvent.VK_LEFT]) {
-            player2.move(-5,0);
+            if (player2.getGround()) {
+                player2.move(-6,0);
+            } else {
+                player2.move(-3,0);
+            }
         }
       
         player.fallingDown(floor);
